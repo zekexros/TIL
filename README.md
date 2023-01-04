@@ -6,4 +6,4 @@
 
 ## Data Structure
 - [Stack](https://github.com/zekexros/TIL/blob/main/DataStructure/stack.md)
-- [Queue](https://github.com/zekexros/TIL/blob/main/DataStructure/queue.md)
+- [Queue](https://github.com/zekexros/TIL/blob/main/DataStructure/Queue.md)
