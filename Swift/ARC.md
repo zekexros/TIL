@@ -289,7 +289,71 @@ func test() {
 
 <br/>
 
-### 이어지는 내용은 2편에 이어서...
+
+
+## Safe techniques in Weak and unowned references
+
+- 스위프트는 `withExtendedLifetime()`메서드를 통해 객체의 수명을 명시적으로 연장할 수 있는 유틸리티를 제공합니다.
+
+
+
+<img width="558" alt="CleanShot 2023-01-04 at 15 59 07@2x" src="https://user-images.githubusercontent.com/42647277/210500842-2d978182-7f47-45a0-8fc0-26e09c23a9c6.png">
+
+- `withExtendedLifetime()`를 사용하면 printSummary()함수가 호출되는 동안 Traveler 객체의 수명을 안전하게 연장하여 잠재적인 버그의 발생을 예방할 수 있습니다.
+
+
+
+<br/>
+
+
+
+<img width="558" alt="CleanShot 2023-01-04 at 16 01 55@2x" src="https://user-images.githubusercontent.com/42647277/210501163-f1949747-d7f4-4029-b21b-1e9157cf7a35.png">
+
+- test()함수 스코프의 맨 마지막에 클로저 내부를 빈 상태로 구현하여도 동일한 효과를 얻을 수 있습니다. 
+
+<br/>
+
+
+
+<img width="558" alt="CleanShot 2023-01-04 at 16 03 55@2x" src="https://user-images.githubusercontent.com/42647277/210501440-9628744e-858b-40f4-8889-9e0adabda2a4.png">
+
+- 더 복잡한 경우에, defer를 사용하여 객체의 수명을 test()함수 범위 끝까지로 확장하도록 컴파일에 요청할 수도 있습니다.
+
+<br/>
+
+
+
+- `withExtendedLifeTime()`은 객체의 수명에 관한 버그를 쉽게 해결할 수 있어 보이지만 사실 취약한 점이 있습니다.
+- 그건 바로 사용자에게 정확히 사용해야 할 책임이 있다는 것입니다.
+- weak의 사용이 버그를 일으킬 가능성이 있을 때마다 `withExtendedLifeTime()` 을 사용하여 확인해야 합니다.
+- 여차하면 코드베이스 전체 범위에서 자주 사용되며 이에따라 유지 관리에 대한 비용이 커지게 됩니다.
+
+
+
+<br/>
+
+
+
+<img width="554" alt="CleanShot 2023-01-04 at 16 12 32@2x" src="https://user-images.githubusercontent.com/42647277/210502606-3331fd6f-3c32-4b68-9a2b-1a69c3b9b1fb.png">
+
+- 더 나은 API가 되도록 class를 재정의하는 것이 훨씬 원칙적인 접근 방법입니다.
+- 객체에 대한 접근을 오직 strong reference로만 제한하는 것이 예상치 못한 일을 방지할 수 있습니다.
+- weak으로 선언되어있는 traveler에 대해 private으로 감췄습니다.
+- 이제 test()함수는 strong reference를 통해 printSummary()를 호출하여 잠재적인 버그를 제거합니다.
+
+
+
+<br/>
+
+
+
+<img width="556" alt="CleanShot 2023-01-04 at 16 30 42@2x" src="https://user-images.githubusercontent.com/42647277/210505149-9632e5e8-077d-45cc-9838-ea66e646a605.png">
+
+- 클래스 설계에 주의하지 않으면, weak과 unowned의 사용은 성능에 대한 비용을 요구할 뿐만 아니라 버그에도 노출될 수 있습니다.
+- weak과 unowned가 왜 필요한지 생각해야 합니다. 단순히 순환 참조를 피하기 위해서? 단지 피하기 위해서라면 순환 관계에 놓여있는 class들을 트리 구조로 변경하여 피할 수 있습니다.
+- 사실 이 예제에서도 Traveler는 Account클래스가 필요했지만 그 반대는 필요하지 않습니다. Account는 단지 traveler의 개인 정보가 필요한 것 뿐입니다.
+- 위와 같이 PersonalInfo를 새로 만든다면 순환 참조를 피할 수 있습니다.
+- week과 unowned가 필요하지 않도록 설계하는 것은 구현에 대한 비용이 들 수 있겠으나, 이것은 잠재적으로 존재할 버그를 없애기 위한 가장 확실한 방법입니다.
 
 
 
