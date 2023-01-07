@@ -121,15 +121,11 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 ## 갖고 놀다가 알게된 사실
 
-1. Class타입의 객체 안에 Class타입의 프로퍼티를 캡쳐하면 클로저 내부에서 변경할 수 있을까 없을까? 답은 변경할 수 없다.
-
-   ![CleanShot 2023-01-06 at 15.41.13@2x](/Users/zeke/Library/Application Support/CleanShot/media/media_bkLfuyj8w4/CleanShot 2023-01-06 at 15.41.13@2x.png)
+1. Class타입의 객체 안에 Class타입의 프로퍼티를 캡쳐하면 클로저 내부에서 변경할 수 있을까 없을까? 답은 변경할 수 없다.<img width="889" alt="CleanShot 2023-01-06 at 15 41 13@2x" src="https://user-images.githubusercontent.com/42647277/211140779-2269107a-e609-4101-bffe-a905339093da.png">
 
    
 
-2. Struct타입의 객체 안에 Class타입의 변수를 캡쳐하면 클로저 내부에서 변경할 수 있을까 없을까? 답은 변경할 수 없다.
-
-   <img width="913" alt="CleanShot 2023-01-06 at 15 45 31@2x" src="https://user-images.githubusercontent.com/42647277/210945725-4efba419-e504-4917-bf84-e4024f092ac6.png">
+2. Struct타입의 객체 안에 Class타입의 변수를 캡쳐하면 클로저 내부에서 변경할 수 있을까 없을까? 답은 변경할 수 없다.<img width="913" alt="CleanShot 2023-01-06 at 15 45 31@2x" src="https://user-images.githubusercontent.com/42647277/210945725-4efba419-e504-4917-bf84-e4024f092ac6.png">
 
 3. 객체의 내부 변수를 캡쳐하려고 하면 항상 이름을 지정해줘야 한다.<img width="884" alt="CleanShot 2023-01-06 at 15 36 25@2x" src="https://user-images.githubusercontent.com/42647277/210944484-14dd8582-ae6b-42b9-ab99-d110523d7531.png">
 
