@@ -69,6 +69,7 @@ struct Person {
 ### Subscript 문법을 사용하네?
 
 우리가 흔히 사용하는 Array나 Dictionary타입들은 subscript문법에 의해 대괄호를 사용하여 편하게 데이터를 읽거나 쓰고있었습니다. `@dynamicMemberLookup` 또한 subscript메서드를 통해 구현하도록 하는데 정작 사용은 점(.)을 붙여서 사용하도록 구현되어있죠. 이는 개발자들의 편의성을 위해 애플이 dot syntax를 사용하도록 구현한 것이고 실제로는 컴파일러에 의해 대괄호를 사용하는 것으로 해석됩니다.
+```swift
 // dot syntax을 이용하여 사용하는 모습
 someValue.someMember = a
 mutateParameter(&someValue.someMember)
@@ -76,6 +77,7 @@ mutateParameter(&someValue.someMember)
 // 실제 컴파일러가 해석하는 모습
 someValue[dynamicMember: "someMember"] = a
 mutateParameter(&someValue[dynamicMember: "someMember"])
+```
 
 <br/>
 
