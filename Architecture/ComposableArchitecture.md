@@ -463,13 +463,6 @@ store.dependencies.numberFact.fetch = { "\($0) is a good number Brent" }
 ## 마무리
 
 Composable Architecture에 대한 기본적인 설명은 여기까지 입니다. 이 외에 composition, modularity, adaptability, complex  effects 등 알아볼 것들이 많이 존재합니다. [예제 프로젝트들](https://github.com/pointfreeco/swift-composable-architecture/blob/main/Examples)을 통해 고급 사용법들을 확인할 수 있습니다.
-
-
-
-
-
-- 확인하기
-
   
 
 <br/>
