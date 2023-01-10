@@ -6,6 +6,15 @@
 - [Capture List](https://github.com/zekexros/TIL/blob/main/Swift/CaptureList.md)
 - [Dynamic Member Lookup](https://github.com/zekexros/TIL/blob/main/Swift/DynamicMemberLookup.md)
 
+<br/>
+
 ## Data Structure
+
 - [Stack](https://github.com/zekexros/TIL/blob/main/DataStructure/stack.md)
 - [Queue](https://github.com/zekexros/TIL/blob/main/DataStructure/Queue.md)
+
+<br/>
+
+## Architecture
+
+- [Composable Architecture](https://github.com/zekexros/TIL/blob/main/Architecture/ComposableArchitecture.md)
