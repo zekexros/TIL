@@ -442,6 +442,8 @@ struct MyApp: App {
 
 - 이 뜻은 앱의 시작점에서 더이상 의존성을 구성할 필요가 없어졌음을 의미합니다.
 
+<br/>
+
 ```swift
 let store = TestStore(
   initialState: Feature.State(),
