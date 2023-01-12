@@ -1,5 +1,7 @@
 # Deque
 
+<img width="706" alt="CleanShot 2023-01-12 at 22 10 47@2x" src="https://user-images.githubusercontent.com/42647277/212075114-40f75da7-768e-4a7d-a04d-3cbe3ce4dc57.png">
+
 - 양쪽 끝에서 삽입과 삭제가 모두 가능한 자료 구조의 한 형태입니다.
 
 ```swift
