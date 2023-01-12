@@ -12,6 +12,7 @@
 
 - [Stack](https://github.com/zekexros/TIL/blob/main/DataStructure/stack.md)
 - [Queue](https://github.com/zekexros/TIL/blob/main/DataStructure/Queue.md)
+- [Deque](https://github.com/zekexros/TIL/blob/main/DataStructure/Deque.md)
 
 <br/>
 
