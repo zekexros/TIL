@@ -9,12 +9,12 @@
 
 TCACoordinator를 통해 할 수 있는 것
 
-- [ ] 앱 내에 깊이 중첩된 navigation에 대한 딥 링크를 지원합니다.
-- [ ] 다른 navigation이라도 Screen을 쉽게 재사용할 수 있습니다.
-- [ ] root screen으로 되돌아가거나 navigation내의 특정 screen으로 이동하기 쉽습니다.
-- [ ] 이 모든 navigation 로직을 한 곳에서 관리합니다.
-- [ ] 앱의 navigation을 재사용 가능한 여러개의 Coordinator로 나누고 다시 합칠 수 있습니다.
-- [ ] 단일 시스템을 사용하여 push navigation과 modal presentation을 통합합니다.
+- [x] 앱 내에 깊이 중첩된 navigation에 대한 딥 링크를 지원합니다.
+- [x] 다른 navigation이라도 Screen을 쉽게 재사용할 수 있습니다.
+- [x] root screen으로 되돌아가거나 navigation내의 특정 screen으로 이동하기 쉽습니다.
+- [x] 이 모든 navigation 로직을 한 곳에서 관리합니다.
+- [x] 앱의 navigation을 재사용 가능한 여러개의 Coordinator로 나누고 다시 합칠 수 있습니다.
+- [x] 단일 시스템을 사용하여 push navigation과 modal presentation을 통합합니다.
 
 <br/>
 
@@ -198,9 +198,8 @@ struct CoordinatorView: View {
 
 ## 자동으로 업데이트되는 Routes 배열
 
-
-
-
+- 유저가 back버튼을 누르면 routes 배열은 새로운 navigation state를 반영하도록 자동적으로 업데이트 됩니다.
+- 화면 가장자리 스와이프 혹은 back버튼을 오래 누르기를 통해 화면을 뒤로 이동하면 routes 배열이 자동으로 업데이트 됩니다. 마치 sheet를 스와이프하여 닫으면 자동으로 routes 배열이 업데이트 되는 것처럼 말이죠.
 
 <br/>
 
@@ -210,31 +209,95 @@ struct CoordinatorView: View {
 
 ## Dismiss될 때 Effect의 취소
 
+- 일반적으로 특정 화면에서 시작된 effect는 해당 화면이 pop되거나 dismiss되면 자동적으로 취소됩니다. 이건 많은 보일러플레이트 코드가 필요하지만 추가 작업 없이 이 라이브러리 내에서 완전히 처리됩니다. 
+- 자동적으로 effect들이 cancel되는것을 거부하려면 `forEachRoute`에 인자로 `cancellationId: nil`를 전달하세요.
 
+<br/>
 
-
+<br/>
 
 ## 복잡한 navigation 업데이트
 
+- SwiftUI에서는 한번의 업데이트 안에 2개 이상의 화면을 push, present, dismiss를 할 수 없습니다.(업데이트 한번에 화면전환 1개만 가능하단 소리)
 
+- 이로인해 navigation상태를 큰 단위로 업데이트하기가 까다롭습니다. 예를 들어, 
+
+  - navigation계층의 깊숙한 곳으로 딥링킹을 할 때
+  - 여러 가지 화면을 지나 다시 root 화면으로 되돌아올 때
+  - 임의의 navigation state를 되돌릴 때(이 상황은 어떤 말인지 잘 이해가 안가네요)
+
+- 이 라이브러리는 해결방법을 제공합니다. 
+
+  - 지원되지 않는 큰 단위의 업데이트를 SwiftUI가 지원하는 작은 업데이트 단위로 나누고
+  - 필요하다면 delay도 사용할 수 있도록 지원하고
+  - coordinator reducer로부터 반환되는 effect를 사용할 수 있도록 만들어졌습니다.
+
+- 사용법은 간단합니다. route mutation을 `Effect.routeWithDelaysIfUnsupported`로 감싸주면 됩니다.
+
+  ```swift
+  return Effect.routeWithDelaysIfUnsupported(state.routes) {
+    $0.goBackToRoot()
+  }
+  ```
+
+  ```swift
+  return Effect.routeWithDelaysIfUnsupported(state.routes) {
+    $0.push(...)
+    $0.push(...)
+    $0.presentSheet(...)
+  }
+  ```
+
+<br/> <br/>
 
 ## Child coordinator들로 구성
 
+- Coordinator는 Composable Architecture에서 사용하는 UI단위들과 똑같습니다. `View`와 `State`와 `Action`타입을 가진 `Reducer`로 구성된 것이 똑같죠.
 
+- 이 말은 Coordinator들은 SwiftUI와 TCA가 허용하는 일반적인 방법들을 사용하여 compose 할 수 있습니다.
+
+- Coordinator를 present하고, `TabView`에도 추가하고, 자식 coordinator를 routes 배열에 추가하여 부모 coordinator에서 push 혹은 present도 할 수 있습니다.
+
+- 그렇게 하면 자식 coordinator는 부모 routes배열의 마지막에 존재하는 것이 가장 좋습니다. 왜냐하면 자식 coordinator는 dismiss 되기 전까지 새로운 화면을 push하고 present 할 책임이 있기 때문입니다.
+
+- 그렇게 하지 않으면 **<span style="color:orange">자식이 화면을 push하고 있을 때 부모가 화면을 push하려고 시도하여 충돌이 발생할 수 있습니다</span>**
+
+  
+
+<br/>
+
+<br/>
 
 ## Identifying Screens
 
+- Coordinator의 state는 `IndexedRouterState`를 채택하고 있고 action은 `IndexedRouterAction`을 채택하고 있습니다.
 
+- 이 뜻은 screen들은 route 배열 안에서 index로 식별되었다는 것을 의미합니다.
+
+- 이것은 index가 navigation 업데이트들에 대해 안정적이므로 안전합니다. 예를 들어 push와 pop은 이미 존재하는 화면들의 index에 대해 영향을 주지 않습니다.
+
+- 그러나 만약 `Identifiable` 화면들을 사용하려면 우리는 화면들을 `IdentifiedArray`로 관리해야 합니다.
+
+- 그리고 state를 `IdentifiedRouterState`, action을 `IdentifiedRouterAction`을 채택하도록 해야 위의 이점들을 누릴 수 있습니다.
+
+- 어떠한 프로토콜을 채택하지 않는 것을 원할 경우, 이를 테면 property와 case들의 이름을 다르게 지정하려는 경우 API의 명시적 버전을 사용할 수 있습니다.
+
+  
+
+<br/>
+
+<br/>
 
 ## 유연성과 재사용성
 
+- 화면들의 플로우를 바꿔야 하는 경우에는 한 곳에서 쉽게 변경할 수 있습니다.
+- Navigation 플로우 안에서 screen의 view들과 reducer들은 더이상 다른 screen들을 알 필요가 없습니다.
+- 단순히 action을 보내 코디네이터가 새로운 view를 push할지 또는 present할지 결정하도록 할 수 있습니다.
+- **<span style="color:orange">이를 통해 다양한 화면에서 쉽게 재사용할 수 있으며 화면의 책임과 navigation의 책임을 분리할 수 있습니다.</span>**
 
 
 
-
-
-
-
+<br/>
 
 
 
