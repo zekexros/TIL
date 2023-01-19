@@ -109,8 +109,7 @@ myFunction { [weak parent = self.parent] in print(parent!.title) }
 ## Unowned capturing
 
 - weak을 대안하는 다른 방법은 unowned입니다. 옵셔널이 언래핑 된 것처럼 작동합니다.
-- weak의 작동 방식처럼, unowned로 캡쳐된 값은 미래의 어느시점에서든 값이 nil로 바뀔 수 있습니다.
-- 그러나 항상 값이 있는 것처럼 작업할 수 있습니다. 옵셔널을 언래핑 할 필요가 없습니다.
+- unowned로 참조하는 객체는 항상 메모리에 할당되어있다고 가정하기에 옵셔널 타입도 아니고 당연히 nil이 할당되지도 않습니다.
 - 사용하기 편한만큼 unowned키워드를 사용할 때에는 주의해야 합니다. 만약 클로저가 실행될 때 unowned로 캡쳐한 값이 할당에서 해제된 상태라면, 런타임 에러가 발생하며 앱이 죽게됩니다.
 
 
