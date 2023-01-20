@@ -18,7 +18,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 11 54 45@2x" src="https://user-images.githubusercontent.com/42647277/213608161-6d2cb49d-5236-4b50-b84d-29072a60c72b.png">
+<img width="260" alt="CleanShot 2023-01-20 at 11 54 45@2x" src="https://user-images.githubusercontent.com/42647277/213608161-6d2cb49d-5236-4b50-b84d-29072a60c72b.png">
 
 - 기본적으로 SwiftUI는 각 뷰가 렌더링된 컨테이너를 기준으로 자체 크기를 선택한 다음 부모 뷰 중앙에 배치됩니다.
 - 따라서 위의 코드는 스크린의 중앙에 작은 아이콘으로 렌더링 됩니다. **<span style="color:orange">UIKit처럼 왼쪽 상단에 배치되는 것이 아닙니다.</span>**
@@ -36,7 +36,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 11 54 45@2x" src="https://user-images.githubusercontent.com/42647277/213608161-6d2cb49d-5236-4b50-b84d-29072a60c72b.png">
+<img width="260" alt="CleanShot 2023-01-20 at 11 54 45@2x" src="https://user-images.githubusercontent.com/42647277/213608161-6d2cb49d-5236-4b50-b84d-29072a60c72b.png">
 
 - view의 크기가 50x50 points로 커지지만 아이콘의 크기는 달라지지 않았습니다.
 - 이유를 찾기 위해 백그라운드에 색을 지정하여 frame을 살펴봅시다.
@@ -53,7 +53,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 00 41@2x" src="https://user-images.githubusercontent.com/42647277/213608801-9cf817a2-ea36-4d29-95f0-368c286d2d9e.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 00 41@2x" src="https://user-images.githubusercontent.com/42647277/213608801-9cf817a2-ea36-4d29-95f0-368c286d2d9e.png">
 
 - 색을 지정해보니 view의 크기는 정상적으로 50x50 points로 늘어나있습니다. 단지 아이콘이 `.frame()` modifier의 영향을 받지 않은 것 같군요.
 - view에 modifier를 적용시킬 때 view가 바뀌지 않고 새롭고 투명한 view로 캡슐화하는 경우가 종종 있습니다.
@@ -72,7 +72,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 01 34@2x" src="https://user-images.githubusercontent.com/42647277/213608898-f746efc9-1038-439c-82d4-cf32a17b249d.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 01 34@2x" src="https://user-images.githubusercontent.com/42647277/213608898-f746efc9-1038-439c-82d4-cf32a17b249d.png">
 
 - 레이아웃 관점에서 이미지 자체는 여전히 달라지지 않습니다.
 - **<span style="color:orange">SwiftUI의 view는 자기 자신의 사이즈를 결정할 책임</span>**이 있으므로 우리는 이미지에게 가용할 수 있는 공간을 모두 사용하도록 resize하라고 말해야 합니다.
@@ -104,7 +104,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 01 34@2x" src="https://user-images.githubusercontent.com/42647277/213608898-f746efc9-1038-439c-82d4-cf32a17b249d.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 01 34@2x" src="https://user-images.githubusercontent.com/42647277/213608898-f746efc9-1038-439c-82d4-cf32a17b249d.png">
 
 - `.padding()`modifier적용으로 달력 아이콘 바깥쪽에 패딩이 생길거라는 예상과는 달리 바뀐게 없습니다.
 - 잘보면 이 동작은 위에 `.frame()`을 적용했을 때와 같은 동작입니다. `.padding()`은 이전 view와 modifier들을 바꾸는게 아니라 단지 이전 결과에 공백을 추가할 뿐입니다.
@@ -124,7 +124,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 02 45@2x" src="https://user-images.githubusercontent.com/42647277/213609002-bf69ddf1-e9e7-408a-bbe1-f12f03437e54.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 02 45@2x" src="https://user-images.githubusercontent.com/42647277/213609002-bf69ddf1-e9e7-408a-bbe1-f12f03437e54.png">
 
 - 여기에 다시 `.background()` modifier를 추가하면 어떻게 동작하는지 쉽게 파악이 될 것입니다.
 
@@ -142,7 +142,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 04 07@2x" src="https://user-images.githubusercontent.com/42647277/213609145-14b24b77-20b4-4c72-aba4-4fa606d22489.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 04 07@2x" src="https://user-images.githubusercontent.com/42647277/213609145-14b24b77-20b4-4c72-aba4-4fa606d22489.png">
 
 - 따라서 view의 background를 고려한 inner padding을 추가하려면 background를 추가하기 전에 padding을 적용해야 합니다.
 
@@ -160,7 +160,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 04 54@2x" src="https://user-images.githubusercontent.com/42647277/213609210-ec22bdaf-0774-4cea-aa1b-c16b68b6565b.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 04 54@2x" src="https://user-images.githubusercontent.com/42647277/213609210-ec22bdaf-0774-4cea-aa1b-c16b68b6565b.png">
 
 - 만약 `.frame()` modifier를 적용하기 전에 `.padding()` modifier를 적용한다면 아이콘의 이미지는 축소될 것입니다.
 - 이유는 padding이 <u>고정된 50x50 컨테이너</u> 내에 적용될 것이기 때문입니다.
@@ -186,7 +186,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 06 47@2x" src="https://user-images.githubusercontent.com/42647277/213609388-667e1098-494c-4dc6-9899-6a6f5cbf3ad4.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 06 47@2x" src="https://user-images.githubusercontent.com/42647277/213609388-667e1098-494c-4dc6-9899-6a6f5cbf3ad4.png">
 
 - 흥미로운 점은 위의 `VStack`은 레이아웃에 어떤 영향도 주지 않습니다.
 - 대신 스택안에 있는 자식 뷰들의 전체 크기에 따라 resize될 뿐이죠.
@@ -204,7 +204,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 07 03@2x" src="https://user-images.githubusercontent.com/42647277/213609417-e63a1cea-1e8a-4fca-b5b3-56e974d8cc39.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 07 03@2x" src="https://user-images.githubusercontent.com/42647277/213609417-e63a1cea-1e8a-4fca-b5b3-56e974d8cc39.png">
 
 - `CalendarView`를 이동시키기 위해 스택에 `Spacer`를 추가해야만 합니다.
 - `HStack` 혹은 `VStack`안에 `Spacer`를 배치하면 항상 가용할 수 있는 최대의 공간을 차지합니다. 여기선 `CalendarView`가 화면의 위쪽으로 밀리겠네요. 
@@ -225,7 +225,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 07 20@2x" src="https://user-images.githubusercontent.com/42647277/213609444-2a5c2e9c-1f8f-47b9-bfd5-a385bdc94d14.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 07 20@2x" src="https://user-images.githubusercontent.com/42647277/213609444-2a5c2e9c-1f8f-47b9-bfd5-a385bdc94d14.png">
 
 - 스택의 아주 좋은 점은 어떠한 수동적인 프레임 계산없이 복잡한 레이아웃을 표현하기 위해 스택을 **<span style="color:orange">중첩</span>**할 수 있다는 것입니다.
 - 위의 코드는 `VStack`과 `HStack`을 중첩시켜 화면의 top-leading쪽으로 배치시킨 모습입니다(약간의 Spacer의 도움과 함께).
@@ -247,7 +247,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 13 58@2x" src="https://user-images.githubusercontent.com/42647277/213610104-1a30ec66-09bf-427c-a8ef-a2b3b83cf7a7.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 13 58@2x" src="https://user-images.githubusercontent.com/42647277/213610104-1a30ec66-09bf-427c-a8ef-a2b3b83cf7a7.png">
 
 - 다음으로 뷰에 텍스트를 추가해 보겠습니다.
 - 위의 코드를 보면 `Text`는 `CalendarView` 바로 옆에 렌더링 될 것으로 예상할 수 있습니다. 수평축에서는 사실이지만 수직축에서는 전체 높이를 기준으로 중앙에 배치됩니다.
@@ -270,7 +270,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 07 52@2x" src="https://user-images.githubusercontent.com/42647277/213609508-41299a61-ed73-4000-b18d-4f8876592455.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 07 52@2x" src="https://user-images.githubusercontent.com/42647277/213609508-41299a61-ed73-4000-b18d-4f8876592455.png">
 
 - `Text`도 `CalendarView`와 같은 레이아웃을 가지려면 `VStack`으로 감싸야 하거나 `HStack`의 align을 조정하면 됩니다.
 
@@ -294,7 +294,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 08 15@2x" src="https://user-images.githubusercontent.com/42647277/213609542-90d1d25a-1a6a-4b61-948c-0259fad870fe.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 08 15@2x" src="https://user-images.githubusercontent.com/42647277/213609542-90d1d25a-1a6a-4b61-948c-0259fad870fe.png">
 
 - Event title 아래에 location 텍스트를 렌더링하기 위해 `VStack`이 배치 방식을 조정할 수도 있습니다.
 
@@ -315,7 +315,7 @@ struct EventHeader: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 08 45@2x" src="https://user-images.githubusercontent.com/42647277/213609594-59175406-357f-46db-a807-3abc57c0f7ed.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 08 45@2x" src="https://user-images.githubusercontent.com/42647277/213609594-59175406-357f-46db-a807-3abc57c0f7ed.png">
 
 - 여태 만든 View를 `EventHeader`로 추출했습니다. 그리고 `HStack`의 자식 뷰들간의 spacing을 15로 지정하였습니다.
 
@@ -332,7 +332,7 @@ struct ContentView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 09 17@2x" src="https://user-images.githubusercontent.com/42647277/213609646-ea0fb43d-1a10-40be-a7a9-49f1e0186988.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 09 17@2x" src="https://user-images.githubusercontent.com/42647277/213609646-ea0fb43d-1a10-40be-a7a9-49f1e0186988.png">
 
 - 상위 뷰인 `ContentView`로 되돌아가 `EventHeader`를 spacer와 함께 하나의 `VStack`에 포함시켜 구성할 수 있습니다.
 - 가능하다면 계속해서 작은 뷰들로 추출하는 원칙을 따를겁니다. 이러한 방식으로 작업하면 많은 아키텍처 디자인 작업을 미리 수행할 필요 없이 UI를 작은 단위로 자연스럽게 분리할 수 있습니다.
@@ -390,7 +390,7 @@ struct CalendarView: View {
 }
 ```
 
-<img width="100" alt="CleanShot 2023-01-20 at 12 17 03@2x" src="https://user-images.githubusercontent.com/42647277/213610417-2f1b57dd-622d-42bc-9a19-723b0680d38e.png">
+<img width="260" alt="CleanShot 2023-01-20 at 12 17 03@2x" src="https://user-images.githubusercontent.com/42647277/213610417-2f1b57dd-622d-42bc-9a19-723b0680d38e.png">
 
 - 이제 eventIsVerified라는 프로퍼티를 통해 `CalendarView`의 배지를 조건적으로 구현할 수 있게 되었습니다.
 - `.offset()`과 `ZStack`을 함께 사용하는 것은 view 자체의 레이아웃에 전혀 영향을 주지 않고 다양한 종류의 오버레이를 추가하는 좋은 방법이 될 수 있습니다.
