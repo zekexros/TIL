@@ -34,4 +34,5 @@
 - [SwiftUILayoutSystem1](https://github.com/zekexros/TIL/blob/main/SwiftUI/SwiftUILayoutSystem1.md)
 - [SwiftUILayoutSystem2](https://github.com/zekexros/TIL/blob/main/SwiftUI/SwiftUILayoutSystem2.md)
 - [SwiftUILayoutSystem3](https://github.com/zekexros/TIL/blob/main/SwiftUI/SwiftUILayoutSystem3.md)
+- [SwiftUI에서 AnyView사용을 지양해야 하는 이유](https://github.com/zekexros/TIL/blob/main/SwiftUI/SwiftUI에서%20AnyView사용을%20지양해야%20하는%20이유.md)
 
