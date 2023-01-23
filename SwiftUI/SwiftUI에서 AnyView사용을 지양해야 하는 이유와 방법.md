@@ -1,4 +1,4 @@
-# SwiftUI에서 AnyView사용을 지양해야 하는 이유와 대안
+# SwiftUI에서 AnyView사용을 지양해야 하는 이유와 방법
 
 - SwiftUI는 type-erased view로서 `AnyView`를 제공합니다. 이로인해 특정 뷰를 구현할 때 `AnyView`를 사용하면 좀 더 편리하게 만들 수 있습니다. 하지만 애플은 `AnyView`의 사용을 추천하지 않습니다.
 - 이유는 SwiftUI는 <u>structural identity</u>라고 불리는 메커니즘을 사용하는데 이는 view의 **타입**을 사용하여 식별하고 업데이트 시기를 결정하는 것을 말합니다. 
