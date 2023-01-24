@@ -296,20 +296,107 @@ struct PropertyWrappersApp: App {
 
 ## @FetchRequest
 
+- Fetch request는 SwiftUI의 persistence와 관련된 프로퍼티 래퍼 중 하나입니다.
+- 이것을 통해 Core Data에 있는 데이터를 검색할 수 있습니다.
 
+```swift
+struct ContentView: View {
+  @FetchRequest(fetchRequest: MyModel.fetchRequest())
+  var items: MyModel
+  
+  var body: some View {
+    List(items) { item in
+      Text(item.title)
+    }
+  }
+}
+```
+
+- `@FetchRequest`에 의해 로드된 데이터가 업데이트될 때마다 뷰도 같이 업데이트됩니다.
+- `@FetchRequest`에 대한 다양한 초기화 함수가 있지만 여기서는 다루지 않을 것입니다. 이 [사이트](https://www.youtube.com/watch?v=P8rqjs_CNsk)를 참고하세요.
+- 아래와 같은 상황일 때 `@FetchRequest`를 사용합니다.
+  - Core Data에 저장되어있는 데이터를 view로 빠르게 불러오고 싶을 때
+
+
+
+<br/>
+
+<br/>
 
 ## @AppStorage
 
+- `@AppStorage`는 UserDefaults와 관련된 것으로 앱 전체를 아우르는 프로퍼티 래퍼입니다. 즉, 단순한 키-값 쌍을 저장하기 굉장히 좋은 프로퍼티 래퍼입니다.
+- `UserDefaults`에 저장된 데이터가 변경되면 뷰도 변경됩니다.
+- 프로퍼티에 값을 할당하는 것을 통해 `@AppStorage`의 값을 변경할 수 있습니다.
 
+```swift
+struct ContentView: View {
+  @AppStorage("lastTap") var lastTap: Double?
+  
+  var dateString: String {
+    if let timestamp = lastTap {
+      return Date(timeIntervalSince1970: timestamp).formatted()
+    } else {
+      return "Never"
+    }
+  }
+  
+  var body: some View {
+    Text("Button was last clicked on \(dateString)")
+    
+    Button("Click me") {
+      lastTap = Date().timeIntervalSince1970
+    }
+  }
+}
+```
+
+- 유의해야 할 점은 `@AppStorage`는 앱의 전체 데이터 모델을 보유하기 위한 것이 아니므로 작고 간단한 데이터를 저장하는 용도로만 사용해야 합니다.
+- 아래와 같은 상황일 때 `@AppStorage`를 사용합니다.
+  - 간단한 유저의 환경설정을 저장할 때
+  - 유저가 마지막으로 앱을 켰을 때 추적할 간단한 데이터를 저장할 때
+  - 앱을 다시 시작해야 하는 매우 간단한 state를 저장해야 할 때
+
+<br/>
+
+<br/>
 
 ## @SceneStorage
 
+- `@SceneStorage`는 `@AppStorage`와 한 가지만 빼고 같습니다. 그것은 현재 뷰가 속한 Scene에 데이터를 저장한다는 것입니다.
+- iOS의 앱은 일반적으로 1개의 scene을 사용하지만 mac이나 iPad의 앱은 여러개의 scene을 사용합니다.
+- Scene의 해체되었다 다시 복구되면 scene storage를 통해 다시 사용할 수 있습니다. 만약 scene이 없어지면 scene과 관련된 모든 데이터도 없어집니다.
+- 앱에 중요하지 않은 상태 관련 데이터만 scene storage에 저장해야 합니다.
 
+```swift
+struct ContentView: View {
+  @SceneStorage("lastTap") var lastTap: Double?
+  
+  var dateString: String {
+    if let timestamp = lastTap {
+      return Date(timeIntervalSince1970: timestamp).formatted()
+    } else {
+      return "Never"
+    }
+  }
+  
+  var body: some View {
+    Text("Button was last clicked on \(dateString)")
+    
+    Button("Click me") {
+      lastTap = Date().timeIntervalSince1970
+    }
+  }
+}
 
+```
 
+- 아래와 같은 상황일 때 `@AppStorage`를 사용합니다.
+  - 현재 scene과 관련된 간단한 state만 저장할 때
+  - 저장하려는 데이터가 민감하거나 필수적인 것이 아닐 때
 
-
+<br/>
 
 ## 출처
 
-https://swiftuipropertywrappers.com/#state
+- https://swiftuipropertywrappers.com/#state
