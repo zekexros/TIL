@@ -24,7 +24,7 @@
 
 - [Composable Architecture](https://github.com/zekexros/TIL/blob/main/TCA/ComposableArchitecture.md)
 - [TCACoordinators](https://github.com/zekexros/TIL/blob/main/TCA/TCACoordinators.md)
-- [ReducerProtocol의 body]()(https://github.com/zekexros/TIL/blob/main/TCA/ReducerProtocol_Body.md)
+- [ReducerProtocol의 body](https://github.com/zekexros/TIL/blob/main/TCA/ReducerProtocol_Body.md)
 
 <br/>
 
