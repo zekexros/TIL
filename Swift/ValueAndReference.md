@@ -93,6 +93,147 @@ println("\(x.data), \(y.data)")	// prints "42, 42"
 
 <br/>
 
+<br/>
+
+|                       Memory Segments                        |                     Multi-thread diagram                     |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![memory-segments](https://user-images.githubusercontent.com/42647277/216049527-885922a3-4887-40d9-82a0-cb9bb3007779.svg) | ![image](https://user-images.githubusercontent.com/42647277/216049424-a39bcc39-3a93-465d-8da1-cd1de5262081.gif) |
+
+## Memory Segments
+
+- 메모리는 단지 긴 목록을 가진 바이트(bytes)입니다. 바이트는 순서대로 정렬되어있고, 모든 바이트는 고유한 주소를 가집니다.
+- 개별 주소의 범위를 address space라고 합니다.
+- iOS 앱의 address space는 논리적으로 text, data, stack, heap 이 네 가지 세그먼트로 구성됩니다.
+
+<br/>
+
+### Text Segment
+
+- Text segment는 앱의 실행 가능한 코드를 구성하는 명령어가 포함되어 있습니다.
+- 컴파일러에 의해 Swift를 기계어로 변환하며 생성됩니다.
+- 이 세그먼트는 읽기 전용이며 일정한 공간을 차지합니다.
+
+<br/>
+
+### Data Segment
+
+- Swift의 static variables, constants 및 type의 metadata를 저장합니다.
+- 프로그램이 시작될 때 초기 값이 필요한 모든 전역 데이터는 여기에 존재합니다.
+
+```swift
+class SomeClass {
+    static let sharedInstance = SomeClass()
+    static var count = 0
+}
+```
+
+<br/>
+
+### Stack Segment
+
+- 스택은 메서드의 파라미터나 지역 변수와 같은 임시 데이터들을 저장합니다.
+- 메서드를 호출할 때마다 스택에 새로운 메모리가 할당됩니다.
+- 이 메모리는 메서드가 종료될 때 해제됩니다.
+- 일부 예외를 제외하고는 모든 Swift의 value타입들이 여기에 저장됩니다.(일부는 아래에서 설명할 예정)
+
+<br/>
+
+### Heap Segment
+
+- 힙은 수명을 갖는 객체를 저장합니다. 이 객체들은 모두 스위프트의 reference타입이고 value타입 중 몇몇도 여기에 저장됩니다.(아래에서 설명할 예정)
+- 힙과 스택은 서로를 향해 증가합니다.
+
+
+
+### Value type이지만 heap에 저장되는 경우(with chatGPT)
+
+- In Swift, value types (such as structures and enumerations) are usually stored on the stack, while reference types (such as classes) are stored on the heap. However, there are some cases where value types may be stored on the heap if they need to have a longer lifetime or if they need to be passed as a reference.
+
+- For example, if a value type is stored as a property of a reference type or is passed as an inout parameter to a function, it will be stored on the heap. This allows the value type to persist beyond the lifetime of the function call and enables it to be modified by reference.
+
+- Here's an example to illustrate this concept:
+
+```swift
+class SomeClass {
+    var someValueType: SomeValueType
+    
+    init(someValueType: SomeValueType) {
+        self.someValueType = someValueType
+    }
+}
+
+struct SomeValueType {
+    var value: Int
+}
+
+var valueType = SomeValueType(value: 42)
+var referenceType = SomeClass(someValueType: valueType)
+valueType.value = 10
+print(referenceType.someValueType.value)  // prints 10
+```
+
+- In this example, `valueType` is a value type stored on the stack, but when it is assigned as a property of `referenceType`, a reference type, it is stored on the heap. This allows the value of `valueType` to be updated and observed through the `referenceType` instance.
+
+
+
+## Cost of Heap vs Stack Allocation
+
+- 스택 메모리 세그먼트는 우리가 아는 자료 구조인 스택 처럼 작동합니다. 스택 상단에 푸쉬하거나 팝하는 것을 말합니다.
+- 스택 상단의 하나의 포인터는 푸쉬나 팝 작업을 하기에 충분합니다.
+- 따라서 공간을 만들기 위해 스택 포인터를 줄이는 것만으로 필요한 메모리를 할당할 수 있습니다.
+- 메서드가 끝나면 스택 포인터를 메서드 호출하기 전의 위치로 증가시킵니다.
+
+<br/>
+
+- 힙 할당에는 더 많은 관련이 있습니다. 적절한 크기의 빈 메모리 블록을 찾기 위해 힙 데이터 구조를 검색해야 합니다.
+- 또한 여러 스레드가 동시에 메모리를 할당할 수 있으므로 힙을 동기화 해야합니다.
+- 힙에서 메모리 할당을 해제하려면 해당 메모리를 다시 적절한 위치에 다시 삽입해야 합니다.
+  - 스위프트는 ARC에 의해 RC를 계산하여 더 이상 필요하지 않을 때 자동으로 메모리의 할당을 해제합니다. 그리고 메모리를 다시 힙에 삽입하여 향후 할당에 재사용할 수 있도록 합니다.
+
+<br/>
+
+- 값과 참조 타입은 일반적으로 각각 스택과 힙에 할당되지만 이러한 규칙에는 고려해야 할 예외가 있습니다.
+
+<br/>
+
+<br/>
+
+## Stack Promotion of Swift Reference Types
+
+- Swift의 참조 타입이 힙에 저장되면 스택에 직접 저장되는 값 타입과 달리 참조를 저장하기 위해 추가 메모리 오버헤드가 필요합니다.
+- 성능을 향상시키기 위해 Swift 컴파일러는 크기가 고정되어 있거나 수명을 예측할 수 있을 때 참조 타입을 스택에 할당하도록 선택할 수 있습니다. 이를 "Stack promotion"이라고 합니다.
+- 참조 타입의 stack promotion이 발생하면 힙에 저장되지 않고 값 타입처럼 스택에 직접 저장됩니다.
+- 스택의 데이터에 접근하는 것이 힙의 데이터에 접근하는 것보다 빠르기 때문에 성능이 향상됩니다.
+
+```swift
+class Point {
+    var x: Int
+    var y: Int
+    
+    init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
+}
+
+func someFunction() {
+    var point = Point(x: 42, y: 43)
+    // ...
+}
+```
+
+- 만약 `Point`가 메서드의 지역변수로 사용된다면 스위프트의 컴파일러는 stack promotion을 진행합니다.
+- 이유는 사이즈가 고정되어있고 생명주기가 뻔히 예상되기 때문입니다.
+- 이 결과는 메모리에 대한 빠른 접근과 퍼포먼스 향상으로 이어집니다.
+- 예시를 보시다시피 reference type인 `Point`는 stack promotion이 이뤄졌습니다. `someFunction`메서드 안에서 지역 변수로 사용되었기 때문에 수명을 예측할 수 있고 x와 y의 크기가 고정되어 있기 때문이죠.
+  - `Int`는 값이 무엇이 되든 고정된 사이즈를 갖습니다. 구동되는 환경에 따라 다른 사이즈를 갖는데, 32-bit에서는 4bytes, 64-bit에서는 8bytes를 갖습니다.
+
+
+
+<br/>
+
 ## 출처
 
 - https://developer.apple.com/swift/blog/?id=10
+- https://www.vadimbulavin.com/value-types-and-reference-types-in-swift/
+- https://www.tirupatibalan.com/2019/04/01/process-threads-queues-in-ios.html
