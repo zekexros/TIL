@@ -5,7 +5,7 @@
 - [ARC](https://github.com/zekexros/TIL/blob/main/Swift/ARC.md)
 - [Capture List](https://github.com/zekexros/TIL/blob/main/Swift/CaptureList.md)
 - [Dynamic Member Lookup](https://github.com/zekexros/TIL/blob/main/Swift/DynamicMemberLookup.md)
-- [ValueAndReference](https://github.com/zekexros/TIL/blob/main/Swift/ValueAndReference.md)
+- [Value And Reference](https://github.com/zekexros/TIL/blob/main/Swift/ValueAndReference.md)
 
 <br/>
 
