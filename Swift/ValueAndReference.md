@@ -143,7 +143,7 @@ class SomeClass {
 - 힙은 수명을 갖는 객체를 저장합니다. 이 객체들은 모두 스위프트의 reference타입이고 value타입 중 몇몇도 여기에 저장됩니다.(아래에서 설명할 예정)
 - 힙과 스택은 서로를 향해 증가합니다.
 
-
+<br/>
 
 ### Value type이지만 heap에 저장되는 경우(with chatGPT)
 
@@ -174,7 +174,7 @@ print(referenceType.someValueType.value)  // prints 10
 
 - In this example, `valueType` is a value type stored on the stack, but when it is assigned as a property of `referenceType`, a reference type, it is stored on the heap. This allows the value of `valueType` to be updated and observed through the `referenceType` instance.
 
-
+<br/>
 
 ## Cost of Heap vs Stack Allocation
 
@@ -193,8 +193,6 @@ print(referenceType.someValueType.value)  // prints 10
 <br/>
 
 - 값과 참조 타입은 일반적으로 각각 스택과 힙에 할당되지만 이러한 규칙에는 고려해야 할 예외가 있습니다.
-
-<br/>
 
 <br/>
 
@@ -228,7 +226,223 @@ func someFunction() {
 - 예시를 보시다시피 reference type인 `Point`는 stack promotion이 이뤄졌습니다. `someFunction`메서드 안에서 지역 변수로 사용되었기 때문에 수명을 예측할 수 있고 x와 y의 크기가 고정되어 있기 때문이죠.
   - `Int`는 값이 무엇이 되든 고정된 사이즈를 갖습니다. 구동되는 환경에 따라 다른 사이즈를 갖는데, 32-bit에서는 4bytes, 64-bit에서는 8bytes를 갖습니다.
 
+<br/>
 
+## Boxing of Swift Value Types
+
+- 스위프트 컴파일러는 value 타입을 박스에 넣고 힙에 할당할 수 있습니다.
+- value 타입들은 아래와 같은 경우 박스에 넣어질 수 있습니다.
+
+<br/>
+
+1. 프로토콜을 준수하는 경우
+
+   - 할당 비용과는 별개로 value 타입이 exixtential 컨테이너 내에 저장되고 기계어의 길이가 3을 넘어갈 때 추가 오버헤드가 나타납니다.
+   - Existential container는 unknown runtime type의 값에 대한 제네릭 컨테이너 입니다.
+     - unknown runtime type이란, 컴파일 타임에 지정되지 않고 런타임 때 결정되는 타입을 말합니다.
+   - 작은 value 타입들은 existential container 내부에 인라인될 수 있습니다.
+   - 큰 것들은 힙에 할당되고 그것들에 대한 참조는 existential container의 버퍼안에 저장됩니다.
+   - 이러한 값들의 수명은 **Value Witness Table**에서 관리합니다.
+   - 이로 인해 프로토콜 메서드를 호출할 때 참조 카운팅 오버헤드와 몇 가지 수준의 간접 참조가 발생합니다. 
+   - SIL생성 코드에서 boxing이 어떻게 보이는지 살펴봅시다.
+   - `Bar` 프로토콜을 생성하고 `Baz`구조체에 채택하도록 합니다.
+
+   ```swift
+   protocol Bar {}
+   struct Baz: Bar {}
+   ```
+
+   <br/>
+
+   - 스위프트 파일의 SIL을 나타내는 명령어
+
+   `swiftc -emit-silgen -O main.swift`
+
+   <br/>
+
+   
+
+   - 결과는 `self`는 `init()`메서드 안에서 box되었습니다.
+
+   ```markdown
+   // Baz.init()
+   sil hidden [ossa] @$s6boxing3BazVACycfC : $@convention(method) (@thin Baz.Type) -> Baz {
+   bb0(%0 : $@thin Baz.Type):
+     %1 = alloc_box ${ var Baz }, var, name "self"   // user: %2
+     ...
+   }
+   ```
+
+<br/>
+
+2. value타입과 reference타입이 섞여있는 경우
+
+   - 구조체에서 클래스에 대한 참조를 저장하고 구조체를 클래스의 필드로 갖는 것이 일반적입니다.
+
+   ```swift
+   // Class inside a struct
+   class A {}
+   struct B { 
+     let a = A() 
+   }
+   
+   // Struct inside a class
+   struct C {}
+   class D {
+       let c = C()
+   }
+   ```
+
+   - SIL출력은 두 경우 모두 구조체 B와 C가 힙에 할당되었음을 보여줍니다.
+
+   ```markdown
+   // B.init()
+   sil hidden [ossa] @$s6boxing1BVACycfC : $@convention(method) (@thin B.Type) -> @owned B {
+   bb0(%0 : $@thin B.Type):
+     %1 = alloc_box ${ var B }, var, name "self"     // user: %2
+     ...
+   }
+   
+   // C.init()
+   sil hidden [ossa] @$s6boxing1CVACycfC : $@convention(method) (@thin C.Type) -> C {
+   bb0(%0 : $@thin C.Type):
+     %1 = alloc_box ${ var C }, var, name "self"     // user: %2
+     ...
+   }
+   ```
+
+<br/>
+
+3. Generic value types
+
+- 우선 generic 구조체를 하나 선언해봅시다.
+
+  ```swift
+  struct Bas<T> {
+      var x: T
+  
+      init(xx: T) {
+          x = xx
+      }
+  }
+  ```
+
+- SIL에 대해 출력 결과를 보면 `self`는 `init(xx:)`에 boxed되어 있습니다.
+
+  ```markdown
+  // Bas.init(xx:)
+  bb0(%0 : $*Bas<T>, %1 : $*T, %2 : $@thin Bas<T>.Type):
+    %3 = alloc_box $<τ_0_0> { var Bas<τ_0_0> } <T>, var, name "self" // user: %4
+    ....
+  }
+  ```
+
+  <br/>
+
+4. 탈출 클로저의 캡쳐
+
+   - 스위프트의 클로저는 모든 지역 변수가 참조로 캡쳐됩니다. CapturePromotion에서 설명한 대로 일부는 여전히 스택으로 승격될 수 있습니다.
+
+   <br/>
+
+5. `Inout` 파라미터
+
+   - `inout` 인자를 갖는 `foo(x:)`에 대한 SIL을 만들어 봅시다.
+
+     ```markdown
+     func foo(x: inout Int) {
+         x += 1
+     }
+     ```
+
+   - SIL을 출력하면 아래와 같습니다.
+
+     ```markdown
+     // foo(x:)
+     sil hidden [ossa] @$s6boxing3foo1xySiz_tF : $@convention(thin) (@inout Int) -> () {
+     // %0                                             // users: %7, %1
+     bb0(%0 : $*Int):
+     ...
+     }
+     ```
+
+     
+
+<br/>
+
+## Cost of Copying
+
+- 대부분의 value 타입은 스택에 할당되며 이를 복사하는 데는 일정한 시간이 걸립니다.
+- 속도에 기여하는 것은 정수 및 부동 소수점 숫자와 같은 기본 유형이 CPU레지스터에 저장되고 이를 복사할 때 RAM 메모리에 액세스 할 필요가 없다는 것입니다.
+- strings, arrays, sets, dictionaries와 같이 스위프트의 확장 가능한 타입의 대부분은 값을 쓸 때 복사됩니다(copy on write).
+- 이 말은 데이터의 변경이 일어날 때만 복사된다는 뜻입니다.
+
+- reference 타입은 데이터를 직접 저장하지 않기 때문에 복사할 때 RC(reference counting)비용만 발생합니다.
+- 보여지는 것은 단순히 정수를 증가하거나 감소시키는 것이지만 실은 더 많은 일들이 일어납니다.
+- 각 작업에는 여러 수준의 간접 지정이 필요하며 동시에 여러 스레드에서 힙을 공유할 수 있으므로 각 작업들은 원자적으로 수행해야 합니다.
+
+<br/>
+
+- value와 reference타입을 혼합하면 상황은 재밌어 집니다.
+- struct 혹은 enum이 reference를 포함하면, 포함된 참조의 횟수에 비례하는 reference counting overhead가 발생합니다.
+- reference를 포함하는 구조체와 reference를 포함하는 클래스를 각각 만들어 retain count를 세면서 비교해봅시다.
+
+  ```swift
+  class Ref {}
+
+  // Struct with references
+  struct MyStruct {
+      let ref1 = Ref()
+      let ref2 = Ref()
+  }
+
+  // Class with references
+  class MyClass {
+      let ref1 = Ref()
+      let ref2 = Ref()
+  }
+  ```
+
+- 이후 `MyStruct`의 RC를 출력을 해봅시다.
+
+  ```swift
+  let a = MyStruct()
+  let anotherA = a
+  print("self:", CFGetRetainCount(a as CFTypeRef))
+  print("ref1:", CFGetRetainCount(a.ref1))
+  print("ref1:", CFGetRetainCount(a.ref2))
+  ```
+  
+
+- 출력은 다음과 같습니다.
+
+  ```markdown
+  self: 1
+  ref1: 2
+  ref1: 2 
+  ```
+
+- `MyClass`에도 똑같이 적용을 해봅시다.
+
+  ```swift
+  let b = MyClass()
+  let anotherB = b
+  print("self:", CFGetRetainCount(b))
+  print("ref1:", CFGetRetainCount(b.ref1))
+  print("ref1:", CFGetRetainCount(b.ref2))
+  ```
+
+- 출력은 다음과 같습니다.
+
+  ```markdown
+  self: 2
+  ref1: 1
+  ref1: 1
+  ```
+
+- 결과를 보면 `MyStruct`가 참조를 두 배로 계산하는 것을 보여줍니다.
+
+<br/>
 
 <br/>
 
