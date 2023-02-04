@@ -80,7 +80,11 @@
      | ------------------------- | ------------------------------------------------------------ |
      | **Request**               | (GET)/authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fc |
      | **Response**              | https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA&state=xyz |
+     
+     <br/>
+     
      | **Step 2: Access Token**  |                                                              |
+     |---|---|
      | **Request**               | (POST) /tokenAuthorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JWContent-Type: application/x-www-form-urlencoded grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb |
      | **Response**              | {           "access_token":"2YotnFZFEjr1zCsicMWpAA",           "token_type":"example",           "expires_in":3600,           "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",           "example_parameter":"example_value"} |
      | 특이사항                  | Authorization Code 획득 후 해당 Code로 Access Token 획득     |
