@@ -156,3 +156,4 @@
 
 - https://blog.naver.com/mds_datasecurity/222182943542
 - https://auth0.com/intro-to-iam/what-is-oauth-2
+- https://www.clowder.com/post/why-your-organization-should-be-using-oauth-2.0
