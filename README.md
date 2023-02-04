@@ -46,3 +46,12 @@
 ## iOS
 
 - [Certificate 와 Provisioning profile](https://github.com/zekexros/TIL/blob/main/iOS/Certificate&Provisioning%20profile.md)
+
+<br/>
+
+<br/>
+
+## Etc
+
+- [OAuth 2.0](https://github.com/zekexros/TIL/blob/main/Etc/OAuth2.0.md)
+
