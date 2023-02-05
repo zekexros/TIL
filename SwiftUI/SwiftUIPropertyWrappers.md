@@ -132,8 +132,6 @@ struct DataOwnerView: View {
 
 
 
-## @ObservedObject
-
 <br/>
 
 <br/>
