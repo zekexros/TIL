@@ -125,5 +125,201 @@ struct BananaView: View {
 
 ## Explicit identity
 
+- 커스텀 혹은 데이터 기반 식별자를 이용하여 View를 식별할 수 있습니다.
+
+- UIKit에서 사용되는 포인터 식별자는 View를 식별하는데 사용되기 때문에 explicit identity의 예시입니다.
+
+- For-each루프에서 View를 반복하면서 예제를 본적이 있을겁니다.
+
+- explicit identity는 식별자를 직접 사용하여 제공할 수 있습니다.
+
+  - .id(~~~)를 사용하여 제공
+
+- View의 identity를 Hashable한 값에 바인딩합니다.
+
+  ```swift
+  extension View {
+          @inlinable public func id<ID>(_ id: ID) -> some View where ID : Hashable
+  }
+  ```
+
+<br/>
+
+```swift
+struct Fruit {
+    let name: String
+    let color: Color
+}
+```
+
+- 이름과 색을 가진 Fruit을 정의해봅시다.
+
+```swift
+struct FruitListView: View {
+    let fruits = [Fruit(name: "Banana", color: .yellow),
+                      Fruit(name: "Cherry", color: .red)]
+    
+    var body: some View {
+        ScrollView {
+            ForEach(fruits) { fruit in
+                FruitView(fruit: fruit)
+            }
+        }
+    }
+}
+ 
+struct FruitView: View {
+    let fruit: Fruit
+    
+    var body: some View {
+        Text("\(fruit.name)!")
+            .foregroundColor(fruit.color)
+            .padding()
+    }
+}
+```
+
+- ScrollView에 ForEach를 사용하여 뷰를 구성합니다.
+- 그러나 위 코드는 `Referencing initializer 'init(_:content:)' on 'ForEach' requires that 'Fruit' conform to 'Identifiable'` 와 같은 컴파일 에러를 발생시킬 것입니다.
+- 이 문제는 `Fruit`에 `Identifiable`프로토콜을 구현하거나 keypath를 제공하면 고쳐질 것입니다.
+- 어느쪽이든 FruitView가 가져야하는 explicit identity에 대해 스유가 알게될 것입니다.
+
+<br/>
+
+```swift
+struct FruitListView: View {
+    let fruits = [Fruit(name: "Banana", color: .yellow),
+                      Fruit(name: "Cherry", color: .red)]
+    
+    var body: some View {
+        ScrollView {
+            ForEach(fruits, id: \.name) { fruit in
+                FruitView(fruit: fruit)
+            }
+        }
+    }
+}
+```
+
+- 위의 새로운 코드는 정상적으로 컴파일되고 `FruitView`는 name에 의해 식별될 것입니다. 왜냐하면 fruit의 name은 유니크하도록 설계되었기 때문이죠.
+
+<br/>
+
+```swift
+struct ContentView: View {
+    let headerID = "header"
+    
+    let fruits = [Fruit(name: "Banana", color: .yellow),
+                      Fruit(name: "Cherry", color: .red)]
+    
+    var body: some View {
+        ScrollView {
+            ScrollViewReader { proxy in
+                Text("Fruits")
+                    .id(headerID)
+ 
+                ForEach(fruits, id: \.name) { fruit in
+                    FruitView(fruit: fruit)
+                }
+ 
+                Button("Scroll to top") {
+                    proxy.scrollTo(headerID)
+                }
+            }
+        }
+    }
+}
+```
+
+- explicit identity가 사용되는 또다른 케이스는 스크롤 뷰의 섹션 중 하나로 수동적으로 스크롤을 수행하는 기능입니다.
+- 위의 예제는 버튼을 탭하면 view를 탑으로 스크롤하게 됩니다. `.id()` 확장자는 view에 커스텀 식별자를 제공하여 explicit identity를 제공하는데 사용됩니다.
+
+<br/>
+
+## Structural identity
+
+- 모든 스유의 View에는 식별자(identity)가 있어야 합니다.
+- 만약 View가 explicit identity가 없다면 대신하여 structural identity가 있을겁니다.
+- structural identity는 View가 뷰 계층 구조에서 타입과 위치를 사용하여 식별되는 경우입니다.
+- 스유는 뷰 계층 구조를 사용하여 View에 대한 implicit identity를 생성합니다.
+
+<br/>
+
+```swift
+struct ContentView: View {
+    @State var isRounded: Bool = false
+    
+    var body: some View {
+        if isRounded {
+            PizzaView()
+                .cornerRadius(25)
+        } else {
+            PizzaView()
+                .cornerRadius(0)
+        }
+ 
+        PizzaView()
+            .cornerRadius(isRounded ? 25 : 0)
+        
+        Toggle("Round", isOn: $isRounded.animation())
+            .fixedSize()
+    }
+}
+```
+
+- 위의 예시에서는 PizzaView에 대해 corner radius에 애니메이션을 주는 2가지 접근 방식이 있습니다.
+
+- 첫 번째는 bool값에 따라 서로 완전히 다른 View를 만듭니다. 실제로 스유는 뒤에서 `ConditionalContent view` 의 인스턴스를 생성합니다.
+
+- `ConditionalContent`는 조건에 따라 다른 View를 표시하는 역할을 합니다.
+
+- 그리고 pizza view들은 조건절이 사용되었으므로 서로 다른 id를 갖습니다.
+
+- 이 경우 스유는 토글이 변경되면 View를 다시 그리고 아래 애니메이션처럼 fade in/out을 적용합니다.
+
+- 이것은 동일한 PizzaView가 아니라는 것을 이해하는 것이 중요합니다.
+
+- 이들은 두 개의 다른 View이며 각각 자기만의 structural identity를 갖습니다.
+
+  ![image1](https://user-images.githubusercontent.com/42647277/218096885-22f683dd-b54e-4e8f-97ed-28b2db547202.gif)
+
+<br/>
+
+```swift
+PizzaView()
+            .cornerRadius(isRounded ? 25 : 0)
+```
+
+- PizzaView는 조건절이 아닌 단순히 view modifier를 통해서도 구현이 가능합니다.
+- 이것은 structural identity가 동일하게 유지됩니다. 그리고 스유는 fade in/out 전환을 적용하지  않습니다.
+- 속성값만 다를 뿐 같은 뷰이기 때문에 corner radius변경을 애니메이션으로 표시합니다.
+- 이 경우에는 structural identity가 변경되지 않습니다. Apple은 if/else문이나 switch같은 조건절을 사용하는 대신 modifier안에 조건을 넣어 identity를 보존할 것을 권장합니다.
+- 앱을 최적화하고 버그가 없도록 만드는 것의 핵심은 바로 structural identity와 이에대한 이해입니다.
+
+```swift
+// Please don't use this:
+extension View {
+    @ViewBuilder
+    func applyIf<M: View>(condition: Bool, transform: (Self) -> M) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
+```
+
+- 위와 같이 왜 conditional modifier를 사용하는 것이 좋지 않은지를 알려줍니다.
+
+- 더 나은 성능을 내기위해 염두해야할 몇 가지 사항이 있습니다.
+  - View의 identity를 유지합니다. 이를 위해 조건문을 사용하지 마세요.
+  - 명시적으로 제공된 경우 View에 안정적인 identifier를 사용하세요.
+  - 가능한 AnyView사용을 피하세요.
 
 
+
+## 출처
+
+- https://doordash.engineering/2022/05/31/how-the-swiftui-view-lifecycle-and-identity-work/
+- https://www.objc.io/blog/2021/08/24/conditional-view-modifiers/
