@@ -9,7 +9,7 @@
 
 ### Concurrency
 
-- [스위프트의 동시성 시스템에서 Task가 하는 역할](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency스위프트의%20동시성%20시스템에서%20Task가%20하는%20역할.md)
+- [스위프트의 동시성 시스템에서 Task가 하는 역할](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/스위프트의%20동시성%20시스템에서%20Task가%20하는%20역할.md)
 
 <br/>
 
