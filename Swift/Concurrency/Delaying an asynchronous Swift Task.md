@@ -41,3 +41,9 @@
 
 - `Task`의 API뿐만 아니라 GCD나 타이머, Objective-C런타임과 같은 예전 도구들을 사용하여 이러한 delay를 구현할 수 있습니다.
 - 그러나 Swift의 새로운 동시성 시스템을 사용하여 비동기 코드를 작성할 때, `Task`타입을 직접적으로 사용하여 delay를 구현한다면 정말 편리할 것입니다.
+
+<br/>
+
+### 출처
+
+- https://www.swiftbysundell.com/articles/delaying-an-async-swift-task/
