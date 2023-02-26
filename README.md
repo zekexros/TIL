@@ -13,6 +13,8 @@
 - [Memory management when using async/await in Swift](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Memory%20management%20when%20using%20async/await%20in%20Swift.md)
 - [Delaying an asynchronous Swift Task](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Delaying%20an%20asynchronous%20Swift%20Task.md)
 
+- [Using Swift’s concurrency system to run multiple tasks in parallel](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Using%20Swift’s%20concurrency%20system%20to%20run%20multiple%20tasks%20in%20parallel.md)
+
 <br/>
 
 <br/>
