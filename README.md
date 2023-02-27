@@ -10,11 +10,9 @@
 ### Concurrency
 
 - [스위프트의 동시성 시스템에서 Task가 하는 역할](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/스위프트의%20동시성%20시스템에서%20Task가%20하는%20역할.md)
-- [Memory management when using async/await in Swift](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Memory%20management%20when%20using%20async/await%20in%20Swift.md)
+- [Memory management when using async/await in Swift](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Memory%20management%20when%20using%20async:await%20in%20Swift.md)
 - [Delaying an asynchronous Swift Task](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Delaying%20an%20asynchronous%20Swift%20Task.md)
-
 - [Using Swift’s concurrency system to run multiple tasks in parallel](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Using%20Swift’s%20concurrency%20system%20to%20run%20multiple%20tasks%20in%20parallel.md)
-
 - [Async sequences, streams, and Combine](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Async%20sequences,%20streams,%20and%20Combine.md)
 
 <br/>
