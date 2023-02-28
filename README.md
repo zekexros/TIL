@@ -15,6 +15,8 @@
 - [Using Swift’s concurrency system to run multiple tasks in parallel](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Using%20Swift’s%20concurrency%20system%20to%20run%20multiple%20tasks%20in%20parallel.md)
 - [Async sequences, streams, and Combine](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Async%20sequences,%20streams,%20and%20Combine.md)
 
+- [Automatically retrying an asynchronous Swift Task](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Automatically%20retrying%20an%20asynchronous%20Swift%20Task.md)
+
 <br/>
 
 <br/>
