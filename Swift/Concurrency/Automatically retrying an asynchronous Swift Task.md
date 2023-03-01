@@ -4,7 +4,7 @@
 
 <br/>
 
-- 아래 코드에서는 애플의 네트워크를 구현하기 위해 Combine 프레임워크를 사용할 때 retry를 사용하고 있으며 발생한 에러를 처리하기 전에 3번의 retry를 합니다:
+- 아래 코드에서는 네트워크를 구현하기 위해 Apple의 Combine 프레임워크를 사용할 때 retry를 사용하고 있으며 발생한 에러를 처리하기 전에 3번의 retry를 합니다:
 
   <img width="811" alt="CleanShot 2023-02-28 at 21 09 21@2x" src="https://user-images.githubusercontent.com/42647277/221850682-93b1f144-9983-4e39-a785-085ed56507cd.png">
 
