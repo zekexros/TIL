@@ -58,6 +58,7 @@
 ## iOS
 
 - [Certificate 와 Provisioning profile](https://github.com/zekexros/TIL/blob/main/iOS/Certificate&Provisioning%20profile.md)
+- [Framework에 dependency target으로 static library를 추가할 수 없는 이유](https://github.com/zekexros/TIL/blob/main/iOS/Framework에%20dependency%20target으로%20static%20library를%20추가할%20수%20없는%20이유.md)
 
 <br/>
 
