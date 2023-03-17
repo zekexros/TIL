@@ -69,3 +69,10 @@
 
 - [OAuth 2.0](https://github.com/zekexros/TIL/blob/main/Etc/OAuth2.0.md)
 
+<br/>
+
+<br/>
+
+## CS
+
+- [컴퓨터 구조의 큰 그림](https://github.com/zekexros/TIL/blob/main/CS/컴퓨터%20구조의%20큰%20그림.md)
