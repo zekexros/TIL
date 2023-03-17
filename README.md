@@ -77,3 +77,4 @@
 
 - [컴퓨터 구조의 큰 그림](https://github.com/zekexros/TIL/blob/main/CS/컴퓨터%20구조의%20큰%20그림.md)
 - [0과 1로 숫자를 표현하는 방법](https://github.com/zekexros/TIL/blob/main/CS/0과%201로%20숫자를%20표현하는%20방법.md)
+- [0과 1로 문자를 표현하는 방법](https://github.com/zekexros/TIL/blob/main/CS/0과%201로%20문자를%20표현하는%20방법.md)
