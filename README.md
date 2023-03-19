@@ -79,3 +79,5 @@
 - [0과 1로 숫자를 표현하는 방법](https://github.com/zekexros/TIL/blob/main/CS/0과%201로%20숫자를%20표현하는%20방법.md)
 - [0과 1로 문자를 표현하는 방법](https://github.com/zekexros/TIL/blob/main/CS/0과%201로%20문자를%20표현하는%20방법.md)
 - [소스 코드와 명령어](https://github.com/zekexros/TIL/blob/main/CS/소스%20코드와%20명령어.md)
+- [명령어의 구조](https://github.com/zekexros/TIL/blob/main/CS/명령어의%20구조.md)
+
