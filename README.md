@@ -18,6 +18,7 @@
 - [Understanding Swift Concurrency’s AsyncStream](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Understanding%20Swift%20Concurrency’s%20AsyncStream.md)
 - [Making async system APIs backward compatible](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Making%20async%20system%20APIs%20backward%20compatible.md)
 - [Connecting async/await to other Swift code](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Connecting%20async/await%20to%20other%20Swift%20code.md)
+- [Throwing and asynchronous Swift properties](https://github.com/zekexros/TIL/blob/main/Swift/Concurrency/Throwing%20and%20asynchronous%20Swift%20properties.md)
 
 <br/>
 
