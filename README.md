@@ -82,4 +82,5 @@
 - [소스 코드와 명령어](https://github.com/zekexros/TIL/blob/main/CS/소스%20코드와%20명령어.md)
 - [명령어의 구조](https://github.com/zekexros/TIL/blob/main/CS/명령어의%20구조.md)
 - [소스 코드가 명령어가 되기까지](https://github.com/zekexros/TIL/blob/main/CS/소스%20코드가%20명령어가%20되기까지.md)
+- [CPU의 작동원리(ALU와 제어장치)](https://github.com/zekexros/TIL/blob/main/CS/CPU의%20작동원리(ALU와%20제어장치).md)
 
