@@ -76,13 +76,27 @@
 
 ## CS
 
+### 컴퓨터 구조
+
 - [컴퓨터 구조의 큰 그림](https://github.com/zekexros/TIL/blob/main/CS/컴퓨터%20구조의%20큰%20그림.md)
+
+### 데이터
+
 - [0과 1로 숫자를 표현하는 방법](https://github.com/zekexros/TIL/blob/main/CS/0과%201로%20숫자를%20표현하는%20방법.md)
 - [0과 1로 문자를 표현하는 방법](https://github.com/zekexros/TIL/blob/main/CS/0과%201로%20문자를%20표현하는%20방법.md)
+
+### 명령어
+
 - [소스 코드와 명령어](https://github.com/zekexros/TIL/blob/main/CS/소스%20코드와%20명령어.md)
 - [명령어의 구조](https://github.com/zekexros/TIL/blob/main/CS/명령어의%20구조.md)
 - [소스 코드가 명령어가 되기까지](https://github.com/zekexros/TIL/blob/main/CS/소스%20코드가%20명령어가%20되기까지.md)
+
+### CPU의 작동원리
+
 - [CPU의 작동 원리(ALU와 제어장치)](https://github.com/zekexros/TIL/blob/main/CS/CPU의%20작동%20원리(ALU와%20제어장치).md)
 - [CPU의 작동 원리(레지스터)](https://github.com/zekexros/TIL/blob/main/CS/CPU의%20작동%20원리(레지스터).md)
 - [CPU의 작동 원리(명령어 사이클과 인터럽트)](https://github.com/zekexros/TIL/blob/main/CS/CPU의%20작동%20원리(명령어%20사이클과%20인터럽트).md)
 
+### CPU의 성능 향상 기법
+
+- [빠른 CPU를 위한 설계 기법](https://github.com/zekexros/TIL/blob/main/CS/빠른%20CPU를%20위한%20설계%20기법.md)
