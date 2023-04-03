@@ -100,3 +100,4 @@
 ### CPU의 성능 향상 기법
 
 - [빠른 CPU를 위한 설계 기법](https://github.com/zekexros/TIL/blob/main/CS/빠른%20CPU를%20위한%20설계%20기법.md)
+- [명령어 병렬 처리 기법](https://github.com/zekexros/TIL/blob/main/CS/명령어%20병렬%20처리%20기법.md)
