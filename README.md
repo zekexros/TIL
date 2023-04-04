@@ -101,3 +101,4 @@
 
 - [빠른 CPU를 위한 설계 기법](https://github.com/zekexros/TIL/blob/main/CS/빠른%20CPU를%20위한%20설계%20기법.md)
 - [명령어 병렬 처리 기법](https://github.com/zekexros/TIL/blob/main/CS/명령어%20병렬%20처리%20기법.md)
+- [명령어 집합 구조, CISC와 RISC](https://github.com/zekexros/TIL/blob/main/CS/명령어%20집합%20구조,%20CISC와%20RISC.md)
