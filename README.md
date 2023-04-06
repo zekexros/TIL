@@ -102,3 +102,7 @@
 - [빠른 CPU를 위한 설계 기법](https://github.com/zekexros/TIL/blob/main/CS/빠른%20CPU를%20위한%20설계%20기법.md)
 - [명령어 병렬 처리 기법](https://github.com/zekexros/TIL/blob/main/CS/명령어%20병렬%20처리%20기법.md)
 - [명령어 집합 구조, CISC와 RISC](https://github.com/zekexros/TIL/blob/main/CS/명령어%20집합%20구조,%20CISC와%20RISC.md)
+
+### 메모리와 캐시 메모리
+
+- [RAM의 특징과 종류](https://github.com/zekexros/TIL/blob/main/CS/RAM의%20특징과%20종류.md)
