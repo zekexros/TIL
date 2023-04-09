@@ -16,7 +16,7 @@
 - ALU는 레지스터로부터 피연산자를 받아들이고, 제어장치로부터 제어 신호를 받아들입니다.
 - 연산 결과가 레지스터에 담기엔 너무 클 때 플래그 레지스터를 활용하는데 이를 오버플로우라고 한다.
 
-![CleanShot 2023-03-20 at 23.47.08@2x](/Users/zeke/Library/Application Support/CleanShot/media/media_CcJSyJHjoA/CleanShot 2023-03-20 at 23.47.08@2x.png)
+<img width="839" alt="CleanShot 2023-04-10 at 00 57 17@2x" src="https://user-images.githubusercontent.com/42647277/230783227-db3cf216-2bf5-4c14-8e0b-6def52b2506c.png">
 
 - 플래그에는 위와 같은 종류들이 있다.
 
